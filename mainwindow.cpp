@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     p_start_button = new QPushButton("Start calculating");
     p_menu_layout->addWidget(p_start_button, 5, 1, 1, 2);
+
+    p_values_vector = new QVector<ValueElement*>;
+    p_values_vector->reserve(10);
 }
 
 MainWindow::~MainWindow()
@@ -51,18 +54,8 @@ void MainWindow::addNewElement()
 {
     qDebug() << "add new element";
 
-    QWidget *p_new_element = new QWidget;
-    QHBoxLayout *p_new_element_layout = new QHBoxLayout;
-
-    p_new_element->setFixedHeight(70);
-
-    p_new_element->setLayout(p_new_element_layout);
-
-    QLabel *p_new_element_label = new QLabel("11");
-    QLineEdit *p_new_element_line_edit = new QLineEdit;
-
-    p_new_element_layout->addWidget(p_new_element_label);
-    p_new_element_layout->addWidget(p_new_element_line_edit);
+    ValueElement *p_new_element = new ValueElement(p_values_vector->size() + 1);
+    p_values_vector->append(p_new_element);
 
     p_scroll_area_widget->resize(p_calculation_values_scroll_area->width() - 2, p_scroll_area_widget->height() + p_new_element->height());
     p_scroll_area_layout->addWidget(p_new_element);
@@ -71,6 +64,15 @@ void MainWindow::addNewElement()
 void MainWindow::removeLastElement()
 {
     qDebug() << "remove last element";
+
+    if(!p_values_vector->isEmpty())
+    {
+        ValueElement *p_element_to_delete = p_values_vector->last();
+        p_scroll_area_widget->resize(p_calculation_values_scroll_area->width() - 2, p_scroll_area_widget->height() - p_element_to_delete->height());
+
+        delete p_element_to_delete;
+        p_values_vector->pop_back();
+    }
 }
 
 void MainWindow::setPrecision(QString _precision)

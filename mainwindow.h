@@ -17,6 +17,8 @@
 
 #include <QDebug>
 
+#include "valueelement.h"
+
 class PrecisionGroupBox : public QGroupBox
 {
     Q_OBJECT
@@ -113,6 +115,8 @@ public:
     QPushButton *p_start_button;
 
     PrecisionGroupBox *p_precision_buttons;
+
+    QVector<ValueElement*> *p_values_vector;
 
     //result window widgets
 
