@@ -35,8 +35,6 @@ public:
     QRadioButton *p_precision_button_4;
     QRadioButton *p_precision_button_5;
     QRadioButton *p_precision_button_6;
-    QRadioButton *p_precision_button_7;
-    QRadioButton *p_precision_button_8;
 
     PrecisionGroupBox()
     {
@@ -48,11 +46,9 @@ public:
         p_precision_button_1 = new QRadioButton("0.80");
         p_precision_button_2 = new QRadioButton("0.90");
         p_precision_button_3 = new QRadioButton("0.95");
-        p_precision_button_4 = new QRadioButton("0.98");
-        p_precision_button_5 = new QRadioButton("0.99");
-        p_precision_button_6 = new QRadioButton("0.995");
-        p_precision_button_7 = new QRadioButton("0.998");
-        p_precision_button_8 = new QRadioButton("0.999");
+        p_precision_button_4 = new QRadioButton("0.99");
+        p_precision_button_5 = new QRadioButton("0.995");
+        p_precision_button_6 = new QRadioButton("0.999");
 
         p_layout->addWidget(p_precision_button_1);
         p_layout->addWidget(p_precision_button_2);
@@ -60,19 +56,15 @@ public:
         p_layout->addWidget(p_precision_button_4);
         p_layout->addWidget(p_precision_button_5);
         p_layout->addWidget(p_precision_button_6);
-        p_layout->addWidget(p_precision_button_7);
-        p_layout->addWidget(p_precision_button_8);
 
         p_mapper = new QSignalMapper();
 
-        p_mapper->setMapping(p_precision_button_1, "0.80");
-        p_mapper->setMapping(p_precision_button_2, "0.90");
-        p_mapper->setMapping(p_precision_button_3, "0.95");
-        p_mapper->setMapping(p_precision_button_4, "0.98");
-        p_mapper->setMapping(p_precision_button_5, "0.99");
-        p_mapper->setMapping(p_precision_button_6, "0.995");
-        p_mapper->setMapping(p_precision_button_7, "0.998");
-        p_mapper->setMapping(p_precision_button_8, "0.999");
+        p_mapper->setMapping(p_precision_button_1, "0");
+        p_mapper->setMapping(p_precision_button_2, "1");
+        p_mapper->setMapping(p_precision_button_3, "2");
+        p_mapper->setMapping(p_precision_button_4, "3");
+        p_mapper->setMapping(p_precision_button_5, "4");
+        p_mapper->setMapping(p_precision_button_6, "5");
 
         connect(p_precision_button_1, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
         connect(p_precision_button_2, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
@@ -80,8 +72,6 @@ public:
         connect(p_precision_button_4, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
         connect(p_precision_button_5, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
         connect(p_precision_button_6, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
-        connect(p_precision_button_7, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
-        connect(p_precision_button_8, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
 
         connect(p_mapper, SIGNAL(mapped(QString)), this, SIGNAL(sendPrecision(QString)));
     }
@@ -100,10 +90,11 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    //menu widgets
     QStackedWidget *p_stacked_widget;
 
-    QWidget *p_menu_widget;
+    //menu widgets
+
+    QWidget *p_menu_window;
     QGridLayout *p_menu_layout;
 
     QScrollArea *p_calculation_values_scroll_area;
@@ -119,6 +110,13 @@ public:
     QVector<ValueElement*> *p_values_vector;
 
     //result window widgets
+    QWidget *p_result_window;
+
+    QLineEdit *p_middle_value;
+    QLineEdit *p_dispersion;
+    QLineEdit *p_standart_deviation;
+    QLineEdit *p_absolute_deviation;
+    QLineEdit *p_relative_deviation;
 
 public slots:
 

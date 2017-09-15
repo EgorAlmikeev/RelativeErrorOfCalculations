@@ -5,13 +5,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     //menu widget
-    p_menu_widget = new QWidget;
+    p_menu_window = new QWidget;
     p_menu_layout = new QGridLayout;
-    p_menu_widget->setLayout(p_menu_layout);
+    p_menu_window->setLayout(p_menu_layout);
 
     p_stacked_widget = new QStackedWidget;
-    p_stacked_widget->addWidget(p_menu_widget);
-    p_stacked_widget->setCurrentWidget(p_menu_widget);
+    p_stacked_widget->addWidget(p_menu_window);
+    p_stacked_widget->setCurrentWidget(p_menu_window);
 
     setCentralWidget(p_stacked_widget);
 

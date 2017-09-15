@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    valueelement.cpp
+    valueelement.cpp \
+    core.cpp
 
 HEADERS += \
         mainwindow.h \
-    valueelement.h
+    valueelement.h \
+    core.h
