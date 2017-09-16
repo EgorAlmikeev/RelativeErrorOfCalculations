@@ -18,6 +18,7 @@
 #include <QDebug>
 
 #include "valueelement.h"
+#include "core.h"
 
 class PrecisionGroupBox : public QGroupBox
 {
@@ -59,12 +60,12 @@ public:
 
         p_mapper = new QSignalMapper();
 
-        p_mapper->setMapping(p_precision_button_1, "0");
-        p_mapper->setMapping(p_precision_button_2, "1");
-        p_mapper->setMapping(p_precision_button_3, "2");
-        p_mapper->setMapping(p_precision_button_4, "3");
-        p_mapper->setMapping(p_precision_button_5, "4");
-        p_mapper->setMapping(p_precision_button_6, "5");
+        p_mapper->setMapping(p_precision_button_1, 0);
+        p_mapper->setMapping(p_precision_button_2, 1);
+        p_mapper->setMapping(p_precision_button_3, 2);
+        p_mapper->setMapping(p_precision_button_4, 3);
+        p_mapper->setMapping(p_precision_button_5, 4);
+        p_mapper->setMapping(p_precision_button_6, 5);
 
         connect(p_precision_button_1, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
         connect(p_precision_button_2, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
@@ -73,12 +74,12 @@ public:
         connect(p_precision_button_5, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
         connect(p_precision_button_6, SIGNAL(clicked(bool)), p_mapper, SLOT(map()));
 
-        connect(p_mapper, SIGNAL(mapped(QString)), this, SIGNAL(sendPrecision(QString)));
+        connect(p_mapper, SIGNAL(mapped(int)), this, SIGNAL(sendPrecision(int)));
     }
 
 signals:
 
-    void sendPrecision(QString);
+    void sendPrecision(int);
 };
 
 class MainWindow : public QMainWindow
@@ -91,6 +92,10 @@ public:
     ~MainWindow();
 
     QStackedWidget *p_stacked_widget;
+
+    Core *p_core;
+
+    int precision_number;
 
     //menu widgets
 
@@ -111,19 +116,33 @@ public:
 
     //result window widgets
     QWidget *p_result_window;
+    QVBoxLayout *p_result_window_layout;
 
-    QLineEdit *p_middle_value;
-    QLineEdit *p_dispersion;
-    QLineEdit *p_standart_deviation;
-    QLineEdit *p_absolute_deviation;
-    QLineEdit *p_relative_deviation;
+    QLineEdit *p_middle_value_line;
+    QLineEdit *p_dispersion_line;
+    QLineEdit *p_standart_deviation_line;
+    QLineEdit *p_absolute_deviation_line;
+    QLineEdit *p_relative_deviation_line;
+    QLineEdit *p_final_value_line;
+
+    QLabel *p_middle_value_label;
+    QLabel *p_dispersion_label;
+    QLabel *p_standart_deviation_label;
+    QLabel *p_absolute_deviation_label;
+    QLabel *p_relative_deviation_label;
+    QLabel *p_final_value_label;
+
+    QPushButton *p_close_button;
+
 
 public slots:
 
     void addNewElement();
     void removeLastElement();
-    void setPrecision(QString);
+    void setPrecision(int);
     void startCalculating();
+    void showResultWindow();
+    void showMenuWindow();
 };
 
 #endif // MAINWINDOW_H

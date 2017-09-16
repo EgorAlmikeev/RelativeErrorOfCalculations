@@ -2,6 +2,9 @@
 #define CORE_H
 
 #include <QObject>
+#include <QVector>
+
+#include "valueelement.h"
 
 class Core : public QObject
 {
@@ -9,7 +12,7 @@ class Core : public QObject
 public:
     explicit Core(QObject *parent = nullptr);
 
-    double student_value_table [14][8] =
+    double student_coefficient_table [14][8] =
          //0,    1,    2,     3,     4,      5
     {
         { 3.080, 6.31, 12.71, 63.70, 127.30, 637.20 }, //0 - 2
@@ -30,15 +33,18 @@ public:
 
 signals:
 
-    void sendMiddleValue(double);
-    void sendDispersion(double);
-    void sendStandartDeviation(double);
-    void sendAbsoluteDeviation(double);
-    void sendRelativeDeviation(double);
+    void sendMiddleValue(QString);
+    void sendDispersion(QString);
+    void sendStandartDeviation(QString);
+    void sendAbsoluteDeviation(QString);
+    void sendRelativeDeviation(QString);
+    void sendFinalValue(QString);
+
+    void endOfCalculating();
 
 public slots:
 
-    void startCalculating(int n, int precision_number);
+    void startCalculating(int n, int precision_number, QVector<ValueElement*>*);
 };
 
 #endif // CORE_H
