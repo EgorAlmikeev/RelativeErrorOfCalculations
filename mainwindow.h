@@ -14,6 +14,8 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QLabel>
+#include <QRegExp>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -50,6 +52,8 @@ public:
         p_precision_button_4 = new QRadioButton("0.99");
         p_precision_button_5 = new QRadioButton("0.995");
         p_precision_button_6 = new QRadioButton("0.999");
+
+        p_precision_button_3->setChecked(true);
 
         p_layout->addWidget(p_precision_button_1);
         p_layout->addWidget(p_precision_button_2);
@@ -96,6 +100,7 @@ public:
     Core *p_core;
 
     int precision_number;
+    QRegExp validate_reg;
 
     //menu widgets
 
@@ -133,7 +138,6 @@ public:
     QLabel *p_final_value_label;
 
     QPushButton *p_close_button;
-
 
 public slots:
 

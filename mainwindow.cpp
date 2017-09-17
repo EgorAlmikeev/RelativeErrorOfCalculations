@@ -4,6 +4,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     p_core = new Core;
+    precision_number = 2;
+    validate_reg = QRegExp("^[+-]?[\\d]+($|[\\.][\\d]+|([\\.][\\d]+[Ee]|[Ee])[+-]?\\d+)$");
 
     //menu window
     p_menu_window = new QWidget;
@@ -26,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     p_add_value_button = new QPushButton("+");
     p_remove_value_button = new QPushButton("-");
-//    p_add_value_button->setFlat(true);
-//    p_remove_value_button->setFlat(true);
 
     p_menu_layout->addWidget(p_add_value_button, 0, 0, 1, 1);
     p_menu_layout->addWidget(p_remove_value_button, 0, 1, 1, 1);
@@ -146,6 +146,39 @@ void MainWindow::setPrecision(int _precision_number)
 void MainWindow::startCalculating()
 {
     qDebug() << "start calculating";
+
+    if(p_values_vector->size() == 0 || p_values_vector->size() == 1)
+    {
+        QMessageBox msg;
+        msg.setText("error : nothing to calculate");
+        msg.setInformativeText("Add two values or more");
+        msg.setStandardButtons(QMessageBox::Ok);
+
+        short result = msg.exec();
+
+        if(result == QMessageBox::Ok)
+            return;
+    }
+
+    int counter = 1;
+    for(QVector<ValueElement*>::iterator iter = p_values_vector->begin(); iter != p_values_vector->end(); ++iter, ++counter)
+        if(!(*iter)->p_line_edit->text().contains(validate_reg) > 0)
+        {
+            QMessageBox msg;
+            msg.setText("error : value of line " + QString::number(counter) + " : \"" + (*iter)->p_line_edit->text() + "\" is not correct...");
+            msg.setInformativeText("Try to edit it");
+            msg.setStandardButtons(QMessageBox::Ok);
+
+            short result = msg.exec();
+
+            if(result == QMessageBox::Ok)
+            {
+                (*iter)->p_line_edit->setFocus();
+                return;
+            }
+        }
+
+
 
     p_core->startCalculating(p_values_vector->size(), precision_number, p_values_vector);
 }
