@@ -178,8 +178,6 @@ void MainWindow::startCalculating()
             }
         }
 
-
-
     p_core->startCalculating(p_values_vector->size(), precision_number, p_values_vector);
 }
 
