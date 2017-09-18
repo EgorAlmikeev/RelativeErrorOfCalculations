@@ -9,6 +9,8 @@ int main(int argc, char *argv[])
     w.show();
     w.setStyleSheet(
                     ".QPushButton { background-color : #FAFBFC; border-radius : 5px; }"
+                    ".QLineEdit { border-radius : 5px; }"
+                    ".QLabel { border-radius : 5px; }"
                     );
 
     return a.exec();

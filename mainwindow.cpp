@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     background_palette = QPalette(QColor("#D8E5ED"));
     settings_palette = QPalette(QColor("#D0E4E3"));
-    result_label_palette = QPalette(QColor("#FAFBFC"));
 
     //menu window
     p_menu_window = new QWidget;
@@ -28,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     p_calculation_values_scroll_area = new QScrollArea;
     p_calculation_values_scroll_area->setPalette(settings_palette);
     p_calculation_values_scroll_area->setAutoFillBackground(true);
-//    p_calculation_values_scroll_area->setStyleSheet("border-radius : 5px; border-style : solid; border-color : red;");
 
     p_scroll_area_widget = new QWidget;
     p_calculation_values_scroll_area->setWidget(p_scroll_area_widget);
@@ -64,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     p_result_window->setAutoFillBackground(true);
 
     p_result_window_layout = new QVBoxLayout;
+    p_result_window_layout->setAlignment(Qt::AlignCenter);
     p_result_window->setLayout(p_result_window_layout);
 
     p_stacked_widget->addWidget(p_result_window);
@@ -104,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     p_final_value_label->setAutoFillBackground(true);
 
     p_close_button = new QPushButton("close");
+    p_close_button->setMaximumWidth(100);
 
     p_result_window_layout->addWidget(p_middle_value_label);
     p_result_window_layout->addWidget(p_middle_value_line);
@@ -147,9 +147,6 @@ void MainWindow::addNewElement()
 
     ValueElement *p_new_element = new ValueElement(p_values_vector->size() + 1);
     p_values_vector->append(p_new_element);
-
-    p_new_element->setPalette(QPalette(QColor("#FAFBFC")));
-    p_new_element->setAutoFillBackground(true);
 
     p_scroll_area_widget->resize(p_calculation_values_scroll_area->width() - 2, p_scroll_area_widget->height() + p_new_element->height());
     p_scroll_area_layout->addWidget(p_new_element);
