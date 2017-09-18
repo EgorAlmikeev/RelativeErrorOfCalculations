@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QRegExp>
 #include <QMessageBox>
+#include <QPalette>
 
 #include <QDebug>
 
@@ -42,6 +43,9 @@ public:
     PrecisionGroupBox()
     {
         setTitle("Precision");
+
+        setPalette(QPalette(QColor("#D0E4E3")));
+        setAutoFillBackground(true);
 
         p_layout = new QVBoxLayout;
         setLayout(p_layout);
@@ -101,6 +105,10 @@ public:
 
     int precision_number;
     QRegExp validate_reg;
+
+    QPalette background_palette;
+    QPalette result_label_palette;
+    QPalette settings_palette;
 
     //menu widgets
 

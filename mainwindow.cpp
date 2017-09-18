@@ -7,10 +7,17 @@ MainWindow::MainWindow(QWidget *parent)
     precision_number = 2;
     validate_reg = QRegExp("^[+-]?[\\d]+($|[\\.][\\d]+|([\\.][\\d]+[Ee]|[Ee])[+-]?\\d+)$");
 
+    background_palette = QPalette(QColor("#D8E5ED"));
+    settings_palette = QPalette(QColor("#D0E4E3"));
+    result_label_palette = QPalette(QColor("#FAFBFC"));
+
     //menu window
     p_menu_window = new QWidget;
     p_menu_layout = new QGridLayout;
     p_menu_window->setLayout(p_menu_layout);
+
+    p_menu_window->setPalette(background_palette);
+    p_menu_window->setAutoFillBackground(true);
 
     p_stacked_widget = new QStackedWidget;
     p_stacked_widget->addWidget(p_menu_window);
@@ -19,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(p_stacked_widget);
 
     p_calculation_values_scroll_area = new QScrollArea;
+    p_calculation_values_scroll_area->setPalette(settings_palette);
+    p_calculation_values_scroll_area->setAutoFillBackground(true);
+//    p_calculation_values_scroll_area->setStyleSheet("border-radius : 5px; border-style : solid; border-color : red;");
+
     p_scroll_area_widget = new QWidget;
     p_calculation_values_scroll_area->setWidget(p_scroll_area_widget);
     p_scroll_area_layout = new QVBoxLayout;
@@ -40,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(p_precision_buttons, SIGNAL(sendPrecision(int)), SLOT(setPrecision(int)));
 
     p_start_button = new QPushButton("Start calculating");
+
     p_menu_layout->addWidget(p_start_button, 5, 1, 1, 2);
     connect(p_start_button, SIGNAL(clicked(bool)), SLOT(startCalculating()));
 
@@ -48,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //result window
     p_result_window = new QWidget;
+    p_result_window->setPalette(background_palette);
+    p_result_window->setAutoFillBackground(true);
+
     p_result_window_layout = new QVBoxLayout;
     p_result_window->setLayout(p_result_window_layout);
 
@@ -73,6 +88,20 @@ MainWindow::MainWindow(QWidget *parent)
     p_absolute_deviation_label = new QLabel("Absolute deviation");
     p_relative_deviation_label = new QLabel("Relative");
     p_final_value_label = new QLabel("Final");
+
+    p_middle_value_label->setPalette(result_label_palette);
+    p_dispersion_label->setPalette(result_label_palette);
+    p_standart_deviation_label->setPalette(result_label_palette);
+    p_absolute_deviation_label->setPalette(result_label_palette);
+    p_relative_deviation_label->setPalette(result_label_palette);
+    p_final_value_label->setPalette(result_label_palette);
+
+    p_middle_value_label->setAutoFillBackground(true);
+    p_dispersion_label->setAutoFillBackground(true);
+    p_standart_deviation_label->setAutoFillBackground(true);
+    p_absolute_deviation_label->setAutoFillBackground(true);
+    p_relative_deviation_label->setAutoFillBackground(true);
+    p_final_value_label->setAutoFillBackground(true);
 
     p_close_button = new QPushButton("close");
 
@@ -118,6 +147,9 @@ void MainWindow::addNewElement()
 
     ValueElement *p_new_element = new ValueElement(p_values_vector->size() + 1);
     p_values_vector->append(p_new_element);
+
+    p_new_element->setPalette(QPalette(QColor("#FAFBFC")));
+    p_new_element->setAutoFillBackground(true);
 
     p_scroll_area_widget->resize(p_calculation_values_scroll_area->width() - 2, p_scroll_area_widget->height() + p_new_element->height());
     p_scroll_area_layout->addWidget(p_new_element);

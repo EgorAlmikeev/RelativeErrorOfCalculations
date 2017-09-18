@@ -7,6 +7,9 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.setFixedWidth(500);
     w.show();
+    w.setStyleSheet(
+                    ".QPushButton { background-color : #FAFBFC; border-radius : 5px; }"
+                    );
 
     return a.exec();
 }
