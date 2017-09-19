@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
                     ".QLineEdit { border-radius : 5px; }"
                     ".QLabel { border-radius : 5px; }"
                     );
+    w.setWindowTitle("Relative error");
 
     return a.exec();
 }
