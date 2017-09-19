@@ -234,6 +234,19 @@ void MainWindow::elementsCountValueChanged()
 {
     QString text = p_elements_count_line->text();
 
+    if(text.toInt() > 1000)
+    {
+        QMessageBox msg;
+        msg.setText("error : current version of this application can generate only 1000 maximum");
+        msg.setStandardButtons(QMessageBox::Ok);
+
+        short result = msg.exec();
+        p_elements_count_line->setText(QString::number(p_values_vector->size()));
+
+        if(result == QMessageBox::Ok)
+            return;
+    }
+
     if(!text.contains(validate_reg) > 0)
     {
         QMessageBox msg;
@@ -241,6 +254,7 @@ void MainWindow::elementsCountValueChanged()
         msg.setStandardButtons(QMessageBox::Ok);
 
         short result = msg.exec();
+        p_elements_count_line->setText(QString::number(p_values_vector->size()));
 
         if(result == QMessageBox::Ok)
             return;
