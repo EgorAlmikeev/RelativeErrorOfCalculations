@@ -123,6 +123,8 @@ public:
     QPushButton *p_remove_value_button;
     QPushButton *p_start_button;
 
+    QLineEdit *p_elements_count_line;
+
     PrecisionGroupBox *p_precision_buttons;
 
     QVector<ValueElement*> *p_values_vector;
@@ -155,6 +157,7 @@ public slots:
     void startCalculating();
     void showResultWindow();
     void showMenuWindow();
+    void elementsCountValueChanged();
 };
 
 #endif // MAINWINDOW_H

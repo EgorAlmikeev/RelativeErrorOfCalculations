@@ -43,6 +43,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(p_add_value_button, SIGNAL(clicked(bool)), SLOT(addNewElement()));
     connect(p_remove_value_button, SIGNAL(clicked(bool)), SLOT(removeLastElement()));
 
+    p_elements_count_line = new QLineEdit;
+    p_elements_count_line->setMaximumWidth(50);
+    p_elements_count_line->setText("0");
+    p_menu_layout->addWidget(p_elements_count_line, 0, 2, 1, 2);
+    connect(p_elements_count_line,SIGNAL(returnPressed()), SLOT(elementsCountValueChanged()));
+
     p_precision_buttons = new PrecisionGroupBox;
     p_menu_layout->addWidget(p_calculation_values_scroll_area, 1, 0, 4, 2);
     p_menu_layout->addWidget(p_precision_buttons, 1, 2, 4, 2);
@@ -143,18 +149,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::addNewElement()
 {
-    qDebug() << "add new element";
+    qDebug() << "add new element : " << p_values_vector->size() + 1;
 
     ValueElement *p_new_element = new ValueElement(p_values_vector->size() + 1);
     p_values_vector->append(p_new_element);
 
     p_scroll_area_widget->resize(p_calculation_values_scroll_area->width() - 2, p_scroll_area_widget->height() + p_new_element->height());
     p_scroll_area_layout->addWidget(p_new_element);
+
+    p_elements_count_line->setText(QString::number(p_values_vector->size()));
 }
 
 void MainWindow::removeLastElement()
 {
-    qDebug() << "remove last element";
+    qDebug() << "remove last element : " << p_values_vector->size();
 
     if(!p_values_vector->isEmpty())
     {
@@ -163,6 +171,8 @@ void MainWindow::removeLastElement()
 
         delete p_element_to_delete;
         p_values_vector->pop_back();
+
+        p_elements_count_line->setText(QString::number(p_values_vector->size()));
     }
 }
 
@@ -218,4 +228,30 @@ void MainWindow::showResultWindow()
 void MainWindow::showMenuWindow()
 {
     p_stacked_widget->setCurrentWidget(p_menu_window);
+}
+
+void MainWindow::elementsCountValueChanged()
+{
+    QString text = p_elements_count_line->text();
+
+    if(!text.contains(validate_reg) > 0)
+    {
+        QMessageBox msg;
+        msg.setText("error : can not generate \"" + text + " \" edit lines...");
+        msg.setStandardButtons(QMessageBox::Ok);
+
+        short result = msg.exec();
+
+        if(result == QMessageBox::Ok)
+            return;
+    }
+
+    int count = text.toInt();
+
+    if(count > p_values_vector->size())
+        for(int i = count - p_values_vector->size(); i; --i)
+            addNewElement();
+    else if(count < p_values_vector->size())
+        for(int i = p_values_vector->size() - count; i; --i)
+            removeLastElement();
 }
